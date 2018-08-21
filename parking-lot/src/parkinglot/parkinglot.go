@@ -2,7 +2,7 @@
 //	1. large dependency on special and pass (booleans) throughout program and packages
 //	2. concurrency problems. Need to learn about concurrency and resolve these problems
 //	3. made a lot of assumptions along the way
-//	4. pretty sure the linkedlist approach isn't the best for the
+//	4. pretty sure the linkedlist approach isn't the best for the spaces
 //	5. consider the use of Timer to resolve problem with expired passes. This solution should
 // 		include channels. See docs: https://golang.org/pkg/time/#Timer
 // 6. Look into time package having different time for local and the potental bugs from this.
@@ -88,7 +88,6 @@ func NewLot(rate int, numOfSpacesByType map[spacetypes.SpaceType]int) (*parkingl
 	if rate < 1 {
 		return nil, errors.New("hourly rate cannot be less than 1")
 	}
-	//newLot := &parkinglot{pricePerHour: hourlyRate, levels: make(map[string]*level)}
 	newLot := &parkinglot{pricePerHour: rate, levels: make([]*level.Level, 0, DefaultLevelCapacity)}
 	levelError := newLot.CreateNewLevel(numOfSpacesByType)
 	//levelError := newLot.CreateNewLevel(numOfRegularSpaces, numOfSpecialSpaces, levelName)

@@ -18,14 +18,19 @@ type SpacesQueue struct {
 	size int
 }
 
-// Returns true if the provided currSpace had a previous space. Otherwise returns false.
-func (currSpace *Space) hasPrev() bool {
-	return currSpace.prev != nil
+// Returns true if the space is occupied. Otherwise returns false.
+func (space *Space) isOccupied() bool {
+	return space.ticket != nil
+}
+
+// Returns true if the provided currSpace has a previous space. Otherwise returns false.
+func (space *Space) hasPrev() bool {
+	return space.prev != nil
 }
 
 // Returns true if the provided currSpace has a next space. Otherwise returns false.
-func (currSpace *Space) hasNext() bool {
-	return currSpace.next != nil
+func (space *Space) hasNext() bool {
+	return space.next != nil
 }
 
 // If the providedspaceToRemove is in the list, removes the provided spaceToRemove and returns the
@@ -47,7 +52,6 @@ func (spaces *SpacesQueue) RemoveSpace(spaceToRemove *Space) (*Space, error){
 
 // Add the provided newSpace to the list
 func (spaces *SpacesQueue) Enqueue(newSpace *Space) {
-	newSpace.list = spaces
 	newSpace.next = spaces.back
 	if spaces.IsEmpty() {
 		spaces.front = newSpace
@@ -55,6 +59,7 @@ func (spaces *SpacesQueue) Enqueue(newSpace *Space) {
 		spaces.back.prev = newSpace
 	}
 	spaces.back = newSpace
+	newSpace.list = spaces
 	spaces.size++
 }
 

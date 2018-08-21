@@ -83,8 +83,12 @@ func (spaces *SpacesQueue) IsEmpty() bool {
 	return spaces.size == 0
 }
 
+func NewSpacesList() *SpacesQueue {
+	return &SpacesQueue{}
+}
+
 // TODO: very unsure this will work
-func createNewQueueWithNewSpaces(spacesStartNum, numOfSpaces int) (*SpacesQueue, error) {
+func EnqueueNSpaces(spacesStartNum, numOfSpaces int) (*SpacesQueue, error) {
 	// TODO: the logic for numOfSpaces is repeated in levels. Fix??
 	if spacesStartNum < 0 || numOfSpaces < 0 {
 		return nil, errors.New("must have positive space numbers and number of spaces")

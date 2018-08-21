@@ -73,15 +73,13 @@ type parkinglot struct {
 //	fmt.Println(lot.levels)
 //}
 
-func (lot *parkinglot) AddNewLevel(numOfRegularSpaces, numOfSpecialSpaces int) error {
-	// BUG: need to figure out how capacity works
+func (lot *parkinglot) BuildNewLevel(numOfSpacesByType map[spacetypes.SpaceType]int) error {
+	// QUESTION: need to figure out how capacity works
 	if len(lot.levels) == cap(lot.levels) {
 		return errors.New("bug. Need to figure out how capacity works")
 	}
-	lot.levels[len(lot.levels)] = &level{
-		occupiedSpaces: make(map[int]*space),
-	}
-	return nil
+	lot.levels[len(lot.levels)], error = level.CreateLevel(numOfSpacesByType)
+	return error
 }
 
 func NewLot(rate int, numOfSpacesByType map[spacetypes.SpaceType]int) (*parkinglot, error) {
@@ -89,7 +87,7 @@ func NewLot(rate int, numOfSpacesByType map[spacetypes.SpaceType]int) (*parkingl
 		return nil, errors.New("hourly rate cannot be less than 1")
 	}
 	newLot := &parkinglot{pricePerHour: rate, levels: make([]*level.Level, 0, DefaultLevelCapacity)}
-	levelError := newLot.CreateNewLevel(numOfSpacesByType)
+	levelError := newLot.BuildNewLevel(numOfSpacesByType)
 	//levelError := newLot.CreateNewLevel(numOfRegularSpaces, numOfSpecialSpaces, levelName)
 	return newLot, levelError
 }
